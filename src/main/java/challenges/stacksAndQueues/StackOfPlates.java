@@ -12,41 +12,43 @@ import java.util.Stack;
 
 public class StackOfPlates {
 
-    private int THRESHOLD = 0;
-    private ArrayList<Stack> stacks;
+  private int THRESHOLD = 0;
+  private ArrayList<Stack> stacks;
 
-    public StackOfPlates(int THRESHOLD) {
-        this.THRESHOLD = THRESHOLD;
-        stacks = new ArrayList<Stack>();
-        Stack stack = new Stack();
-        stacks.add(stack);
+  public StackOfPlates(int THRESHOLD) {
+    this.THRESHOLD = THRESHOLD;
+    stacks = new ArrayList<Stack>();
+    Stack stack = new Stack();
+    stacks.add(stack);
+  }
+
+  public void push(int data) {
+    Stack current = getCurrentStack();
+    if(current != null && current.size() < this.THRESHOLD) {
+      current.add(data);
+    } else {
+      Stack newStack = new Stack();
+      newStack.add(data);
+      stacks.add(newStack);
+    }
+  }
+
+  public int pop() {
+    Stack current = getCurrentStack();
+    if(current == null) {
+      throw new EmptyStackException();
+    }
+    int data = (Integer) current.pop();
+
+    if(current.size() == 0) {
+      stacks.remove(stacks.size() - 1);
     }
 
-    public void push(int data) {
-        Stack current = getCurrentStack();
-        if (current != null && current.size() < this.THRESHOLD) {
-            current.add(data);
-        } else {
-            Stack newStack = new Stack();
-            newStack.add(data);
-            stacks.add(newStack);
-        }
-    }
+    return data;
+  }
 
-    public int pop() {
-        Stack current = getCurrentStack();
-        if (current == null) throw new EmptyStackException();
-        int data = (Integer) current.pop();
-
-        if (current.size() == 0) {
-            stacks.remove(stacks.size() - 1);
-        }
-
-        return data;
-    }
-
-    public Stack getCurrentStack() {
-        return stacks.get(stacks.size() - 1);
-    }
+  public Stack getCurrentStack() {
+    return stacks.get(stacks.size() - 1);
+  }
 
 }

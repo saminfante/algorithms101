@@ -2,126 +2,132 @@ package datastructures;
 
 public class SingleLinkedList<E> {
 
-    public Node head;
-    public int size;
+  public Node head;
+  public int size;
 
-    public void push(E e) {
-        Node newNode = new Node(e, null);
+  public void push(E e) {
+    Node newNode = new Node(e, null);
 
-        newNode.next = head;
-        head = newNode;
+    newNode.next = head;
+    head = newNode;
 
-        size++;
+    size++;
+  }
+
+  public int lastIndexOf(E e) {
+    Node current = head;
+    int index = 0;
+
+    while(current.next != null) {
+      if(current.item == e) {
+        return index;
+      }
+      index++;
+      current = current.next;
     }
 
-    public int lastIndexOf(E e) {
-        Node current = head;
-        int index = 0;
-
-        while (current.next != null) {
-            if (current.item == e) return index;
-            index++;
-            current = current.next;
-        }
-
-        // check the last node
-        if (current.item == e) return index;
-
-        return -1;
+    // check the last node
+    if(current.item == e) {
+      return index;
     }
 
-    public E peek() {
-        Node<E> f = head;
-        return (f == null) ? null : f.item;
+    return -1;
+  }
+
+  public E peek() {
+    Node<E> f = head;
+    return (f == null) ? null : f.item;
+  }
+
+  public E pop() {
+    // get the head
+    // assign head to it's next
+    // return head
+    if(head == null) {
+      return null;
     }
 
-    public E pop() {
-        // get the head
-        // assign head to it's next
-        // return head
-        if (head == null) return null;
+    Node<E> first = head;
+    head = first.next;
+    size--;
 
-        Node<E> first = head;
-        head = first.next;
+    return first.item;
+  }
+
+  public boolean remove(E e) {
+    // walk the list from the beginning
+    // delete and return true if found
+    // return false
+
+    // head
+    Node prev = null;
+    Node current = head;
+
+    if(current.item.equals(e)) {
+      // make the next element the new head
+      head = current.next;
+      size--;
+      return true;
+    }
+
+    // all others
+    while(current.next != null) {
+      prev = current;
+      current = current.next;
+
+      if(current.item.equals(e)) {
+        // connect the previous node next to this nodes next
+        // thereby bypassing this current node we want to delete
+        prev.next = current.next;
         size--;
-
-        return first.item;
+        return true;
+      }
     }
 
-    public boolean remove(E e) {
-        // walk the list from the beginning
-        // delete and return true if found
-        // return false
+    return false;
+  }
 
-        // head
-        Node prev = null;
-        Node current = head;
+  public void set(int index, E e) {
 
-        if (current.item.equals(e)) {
-            // make the next element the new head
-            head = current.next;
-            size--;
-            return true;
-        }
+    Node newNode = new Node(e, null);
 
-        // all others
-        while (current.next != null) {
-            prev = current;
-            current = current.next;
-
-            if (current.item.equals(e)) {
-                // connect the previous node next to this nodes next
-                // thereby bypassing this current node we want to delete
-                prev.next = current.next;
-                size--;
-                return true;
-            }
-        }
-
-        return false;
+    // head
+    if(index == 0) {
+      newNode.next = head.next;
+      head = newNode;
+      return;
     }
 
-    public void set(int index, E e) {
+    // all others
+    // take the previous node
+    // attach it's next to this new node
+    // attach this new node to current next node
 
-        Node newNode = new Node(e, null);
+    Node prev = head;
+    Node current = head.next;
 
-        // head
-        if (index == 0) {
-            newNode.next = head.next;
-            head = newNode;
-            return;
-        }
-
-        // all others
-        // take the previous node
-        // attach it's next to this new node
-        // attach this new node to current next node
-
-        Node prev = head;
-        Node current = head.next;
-
-        for (int counter = 1; counter <= index; counter++) {
-            if (counter == index) {
-                prev.next = newNode;
-                newNode.next = current.next;
-                return;
-            } else {
-                prev = current;
-                current = current.next;
-            }
-        }
-
+    for(int counter = 1; counter <= index; counter++) {
+      if(counter == index) {
+        prev.next = newNode;
+        newNode.next = current.next;
+        return;
+      } else {
+        prev = current;
+        current = current.next;
+      }
     }
 
-    private static class Node<E> {
-        E item;
-        Node<E> next;
+  }
 
-        Node(E element, Node<E> next) {
-            this.item = element;
-            this.next = next;
-        }
+  private static class Node<E> {
+    E item;
+    Node<E> next;
+
+    Node(E element, Node<E> next) {
+      this.item = element;
+      this.next = next;
     }
+  }
 }
 
 

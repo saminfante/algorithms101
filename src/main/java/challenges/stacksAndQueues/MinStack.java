@@ -23,42 +23,42 @@ package challenges.stacksAndQueues;
 
 public class MinStack {
 
-    private class Node {
+  private Node head;
 
-        private int data;
-        private int min; // track here
-        private Node next;
+  public void push(int data) {
+    int min = data;
 
-        private Node (int data, int min) {
-            this.data = data;
-            this.min = min;
-        }
+    // check for a min every time we add a node
+    if(head != null) {
+      min = Math.min(data, min());
     }
 
-    private Node head;
+    Node newNode = new Node(data, min);
+    newNode.next = head;
+    head = newNode;
+  }
 
-    public void push(int data) {
-        int min = data;
+  public int pop() {
+    int data = head.data;
+    head = head.next;
 
-        // check for a min every time we add a node
-        if (head != null) {
-            min = Math.min(data, min());
-        }
+    return data;
+  }
 
-        Node newNode = new Node(data, min);
-        newNode.next = head;
-        head = newNode;
+  public int min() {
+    return head.min;
+  }
+
+  private class Node {
+
+    private int data;
+    private int min; // track here
+    private Node next;
+
+    private Node(int data, int min) {
+      this.data = data;
+      this.min = min;
     }
-
-    public int pop() {
-        int data = head.data;
-        head = head.next;
-
-        return data;
-    }
-
-    public int min() {
-        return head.min;
-    }
+  }
 
 }

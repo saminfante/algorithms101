@@ -2,127 +2,127 @@ package datastructures;
 
 public class LinkedList {
 
-    public class Node {
-        int data;
-        Node next;
+  public Node head;
 
-        public Node(int data) {
-            this.data = data;
-        }
+  public void addFront(int data) {
+
+    // Create new node
+    Node newNode = new Node(data);
+
+    // if head...
+    if(head == null) {
+      head = newNode;
+      return;
     }
 
-    public Node head;
+    // Set it's next to current head
+    newNode.next = head;
 
-    public void addFront(int data) {
+    // Set current head equal to this new head
+    head = newNode;
+  }
 
-        // Create new node
-        Node newNode = new Node(data);
+  public int getFirst() {
+    return head.data;
+  }
 
-        // if head...
-        if (head == null) {
-            head = newNode;
-            return;
-        }
-
-        // Set it's next to current head
-        newNode.next = head;
-
-        // Set current head equal to this new head
-        head = newNode;
+  public int getLast() {
+    if(head == null) {
+      throw new IllegalStateException("Empty list!");
     }
 
-    public int getFirst() {
-        return head.data;
+    Node current = head;
+
+    // while we are not at the tail
+    while(current.next != null) {
+      current = current.next; // O(n)
     }
 
-    public int getLast() {
-        if (head == null) {
-            throw new IllegalStateException("Empty list!");
-        }
+    // We are at the tail
+    return current.data;
+  }
 
-        Node current = head;
+  public void addBack(int data) {
+    Node newNode = new Node(data);
 
-        // while we are not at the tail
-        while (current.next != null) {
-            current = current.next; // O(n)
-        }
-
-        // We are at the tail
-        return current.data;
+    // if head... set and return
+    if(head == null) {
+      head = newNode;
+      return;
     }
 
-    public void addBack(int data) {
-        Node newNode = new Node(data);
+    // Else starting at head...
+    Node current = head;
 
-        // if head... set and return
-        if (head == null) {
-            head = newNode;
-            return;
-        }
-
-        // Else starting at head...
-        Node current = head;
-
-        // Walk until to hit tail
-        while (current.next != null) {
-            current = current.next;
-        }
-
-        // Set current node to equal newNode
-        current.next = newNode;
+    // Walk until to hit tail
+    while(current.next != null) {
+      current = current.next;
     }
 
-    public int size() {
+    // Set current node to equal newNode
+    current.next = newNode;
+  }
 
-        if (head == null) {
-            return 0;
-        }
+  public int size() {
 
-        int count = 1;
-        Node current = head;
-
-        while (current.next != null) {
-            current = current.next;
-            count++;
-        }
-
-        return count;
+    if(head == null) {
+      return 0;
     }
 
-    public void clear() {
-        head = null;
+    int count = 1;
+    Node current = head;
+
+    while(current.next != null) {
+      current = current.next;
+      count++;
     }
 
-    public void deleteValue(int data) {
+    return count;
+  }
 
-        // if head
-        if (head == null) {
-            return;
-        }
-        if (head.data == data) {
-            head = head.next;
-            return;
-        }
+  public void clear() {
+    head = null;
+  }
 
-        // else walk the list
-        Node current = head;
+  public void deleteValue(int data) {
 
-        while (current.next != null) {
-            if (current.next.data == data) {
-                current.next = current.next.next;
-                return;
-            }
-            current = current.next;
-        }
+    // if head
+    if(head == null) {
+      return;
+    }
+    if(head.data == data) {
+      head = head.next;
+      return;
     }
 
-    public void print() {
-        Node current = head;
-        while (current != null) {
-            System.out.println(current.data);
-            current = current.next;
-        }
-        System.out.println("");
+    // else walk the list
+    Node current = head;
+
+    while(current.next != null) {
+      if(current.next.data == data) {
+        current.next = current.next.next;
+        return;
+      }
+      current = current.next;
     }
+  }
+
+  public void print() {
+    Node current = head;
+    while(current != null) {
+      System.out.println(current.data);
+      current = current.next;
+    }
+    System.out.println("");
+  }
+
+  public class Node {
+    int data;
+    Node next;
+
+    public Node(int data) {
+      this.data = data;
+    }
+  }
 
 }
